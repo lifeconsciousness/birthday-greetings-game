@@ -1,0 +1,85 @@
+.loading-screen{
+    width: 100vw;
+    height: 100vh;
+    background-color: whitesmoke;
+    position: fixed;
+    z-index: 10000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.fadeOutAnimation{
+    animation: fadeOut 2s linear forwards;
+}
+
+.loading-message{
+    background: linear-gradient(140deg, rgba(23,205,114,1) 0%, rgba(11,6,62,1) 57%, rgba(199,51,61,1) 97%); 
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    font-size: 3rem;
+    transform: translateY(-6px);
+}
+
+.lines-container{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 0 10px;
+}
+
+.line{
+    width: 50px;
+    height: 10px;
+    border: 1px solid black;
+    border-radius: 40px;
+
+    animation: line-animation 2.6s ease-in-out infinite;
+
+}
+.line:nth-child(1){
+    transform: rotate(14deg);
+    animation-delay: -.2s;
+}
+.line:nth-child(3){
+    transform: rotate(-14deg);
+    animation-delay: .1s;
+}
+
+.mirrorToRight{
+    transform: rotate(-180deg);
+}
+
+@keyframes line-animation{
+    0%{
+        width: 50px;
+    }
+    35%{
+        width: 50px;
+    }
+    75%{
+        width: 10px;
+    }
+    100%{
+        width: 50px;
+    }
+}
+
+@keyframes fadeOut{
+    0%{
+        opacity: 1;
+    }
+    60%{
+        opacity: 1;
+    }
+    99%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 0;
+        display: none;
+        z-index: -100;
+    }
+}

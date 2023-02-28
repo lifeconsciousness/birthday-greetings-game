@@ -15,19 +15,27 @@
   .firework::after
   {
     --initialSize: 0.5vmin;
-    --finalSize: 45vmin;
-    --particleSize: 0.2vmin;
-    --color1: yellow;
-    --color2: khaki;
+    --finalSize: 60vmin;
+    --particleSize: 10vmin;
+    // --color1: yellow;
+    // --color2: khaki;
+    // --color3: white;
+    // --color4: lime;
+    // --color5: gold;
+    // --color6: mediumseagreen;
+    --color1: rgb(0, 8, 255);
+    --color2: rgb(232, 47, 47);
     --color3: white;
     --color4: lime;
-    --color5: gold;
+    --color5: rgb(242, 255, 0);
     --color6: mediumseagreen;
     --y: -30vmin;
     --x: -50%;
     --initialY: 60vmin;
     content: "";
-    animation: firework 2s infinite;
+    animation: firework 3s infinite;
+    animation-delay: 3s !important;
+    opacity: 0;
     position: absolute;
     top: 50%;
     left: 50%;
