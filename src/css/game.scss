@@ -1,0 +1,24 @@
+.game-screen{
+    width: 100vw;
+    height: 100vh;
+    background-color: whitesmoke;
+    position: fixed;
+    z-index: 10000;
+}
+
+.stage{
+    width: 100vw;
+    height: 100px;
+    background-color: black;
+    position: absolute;
+    bottom: 0;
+}
+
+.player{
+    height: 80px;
+    width: 30px;
+    background-color: red;
+    position: absolute;
+    bottom: 100px;
+    right: 50%;
+}

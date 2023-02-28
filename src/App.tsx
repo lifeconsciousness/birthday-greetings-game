@@ -1,63 +1,40 @@
 import { useState, useEffect } from 'react'
 import './index.scss' 
+import Fireworks from './components/Fireworks'
+import Loader from './components/Loader'
+import Balloon from './components/Balloon'
+import Game from './components/Game'
 
 function App() {
   const [loading, setLoading] = useState(false)
+  const [gameActive, setGameActive] = useState(false)
+
   useEffect(()=> {
     setLoading(true)
   }, [])
   
-  //the balloon pops and fireworks animation starts playing and text pops out
-  const onBalloonPop = () => {
+  const handleBalloonPop = () => {
     console.log('pop')
+    setGameActive(true)
   };
 
   return (
     <div className="App">
-      <div className={loading ? "loading-screen fadeOutAnimation" : 'loading-screen'}>
-        <div className="lines-container">
-          <div className="line"></div>
-          <div className="line"></div>
-          <div className="line"></div>
-        </div>
-        <h2 className='loading-message'>Loading</h2>
-        <div className="lines-container mirrorToRight">
-          <div className="line"></div>
-          <div className="line"></div>
-          <div className="line"></div>
-        </div>
-      </div>
+      {gameActive ? <Game /> : 
+        <>
+          <Loader onLoading={loading} />
+    
+          <div className="wave" style={{zIndex: -3, top: '15px'}}></div>
+    
+          <h1 className="congratulation-text">Happy birthday!</h1>
+          <Balloon onPop={handleBalloonPop} />
+          <Fireworks />
+    
+          <div className="wave" style={{bottom: '20px', zIndex: 888}}></div>
+        </>
+      }
 
-      <div className="wave" style={{zIndex: -3, top: '15px'}}></div>
-      <h1 className="congratulation-text">Happy birthday!</h1>
-
-
-      <div className="balloonContainer" 
-        onClick={()=>{onBalloonPop()}}
-        style={
-          {left: `${Math.floor(Math.random() * 60)+13}vw`,
-            animationDelay: `${(Math.floor(Math.random() * 10) + 1)/10}s`,
-          }}>
-        <div className="balloon"><div className="balloonShade"></div></div>
-        <div className="rope"></div>
-      </div>
-      
-
-      <div className="firework" style={{transform: 'translate(-400px, -100px)', animationDelay: '.3s'}}></div>
-      <div className="firework"></div>
-      <div className="firework"></div>
-      <div className="firework"></div>
-      <div className="firework" style={{transform: 'translate(300px, -200px)', animationDelay: '.1s'}}></div>
-
-      <div className="wave" style={{bottom: '20px', zIndex: 888}}></div>
-
-
-
-
-      <div className="game">
-        
-      </div>
-
+      {/* <Game /> */}
     </div>
   )
 }
