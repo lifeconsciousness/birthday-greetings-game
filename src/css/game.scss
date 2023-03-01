@@ -22,3 +22,12 @@
     bottom: 100px;
     right: 50%;
 }
+
+.transition{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(209, 154, 154);
+    position: fixed;
+    z-index: 10002;
+    transform: rotate(-45deg);
+}
