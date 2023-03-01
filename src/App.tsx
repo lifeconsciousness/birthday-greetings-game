@@ -4,7 +4,6 @@ import Fireworks from './components/Fireworks'
 import Loader from './components/Loader'
 import Balloon from './components/Balloon'
 import Game from './components/Game'
-// "build": "tsc && vite build",
 
 function App() {
   const [loading, setLoading] = useState(false)
