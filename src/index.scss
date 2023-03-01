@@ -121,10 +121,10 @@ body {
   text-align: center;
   font-size: 3rem;
 
-  animation: letterUp 1s infinite linear alternate !important;
+  animation: upAndDown 1s infinite ease-in-out !important;
 }
 
-@keyframes letterUp{
+@keyframes upAndDown{
   0%{
     transform: translateY(0);
   }
