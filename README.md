@@ -5,13 +5,7 @@ A birthday card with a little game in it :)
 
 Technologies that were used:
 <ul>
-<li>
-Vite
-<li/>
-<li>
-React
-<li/>
-<li>
-Typescript
-<li/>
-<ul/>
+  <li>Vite</li>
+  <li>React</li>
+  <li>Typescript</li>
+</ul> 
