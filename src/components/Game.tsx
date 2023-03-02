@@ -14,12 +14,14 @@ export default function Game({}: Props) {
 
     //make transition animation
     //set a rand position for player every time
-    //make pop animation for the balloon
+    //make pop animation for the balloon and some particles before popping
     //write message to pop the balloon and message about controlls in the game
     //make the initial 3,2,1 countdown
     //make squares randomly generate on the top and fall with different velocity
     //draw player stickman with hands trying to catch the present
-    //find/draw texture for presents and stage 
+    //find/draw texture for presents and stage
+    //add animation to the character when it moves
+     
 
     const [playerPosition, setPlayerPosition] = useState(windowWidth/2)
 
@@ -103,7 +105,7 @@ export default function Game({}: Props) {
 
     return (
         <>
-            <div className="transition"></div>
+            <div className="transitionAnimation"></div>
             <div className="game-screen">
                 <div className="stage"></div>
                 <div className="player" style={{left: `${playerPosition}px`}}></div>

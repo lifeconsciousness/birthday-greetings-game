@@ -23,11 +23,25 @@
     right: 50%;
 }
 
-.transition{
-    width: 100vw;
-    height: 100vh;
-    background-color: rgb(209, 154, 154);
+
+.transitionAnimation{
+    width: 900vw;
+    height: 400vh;
+    background-color: rgb(36, 32, 32);
     position: fixed;
     z-index: 10002;
-    transform: rotate(-45deg);
+
+    animation: transitionAnimation 3.4s forwards;
+}
+
+@keyframes transitionAnimation{
+    0%{
+        transform: translateY(0);
+        transform: rotate(-45deg);
+        
+    }
+    100%{
+        transform: translateY(-400vh);
+        transform: translateX(500vw);
+    }
 }

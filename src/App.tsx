@@ -6,6 +6,7 @@ import Balloon from './components/Balloon'
 import Game from './components/Game'
 
 function App() {
+  const switchDelay = 10
   const [loading, setLoading] = useState(false)
   const [gameActive, setGameActive] = useState(false)
 
@@ -15,12 +16,18 @@ function App() {
   
   const handleBalloonPop = () => {
     console.log('pop')
-    setGameActive(true)
+
+    //delay before switching to the game
+    setTimeout(() => {
+      setGameActive(true);
+    }, switchDelay);
   };
+
+
 
   return (
     <div className="App">
-      {gameActive ? <Game /> : 
+      {/* {gameActive ? <Game /> : 
         <>
           <Loader onLoading={loading} />
     
@@ -32,9 +39,9 @@ function App() {
     
           <div className="wave" style={{bottom: '20px', zIndex: 888}}></div>
         </>
-      }
+      } */}
 
-      {/* <Game /> */}
+      <Game />
     </div>
   )
 }
