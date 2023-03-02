@@ -9,7 +9,7 @@
 .stage{
     width: 100vw;
     height: 100px;
-    background-color: black;
+    background-color: rgb(27, 25, 25);
     position: absolute;
     bottom: 0;
 }
@@ -28,20 +28,51 @@
     width: 900vw;
     height: 400vh;
     background-color: rgb(36, 32, 32);
+    // background-color: rgb(27, 25, 25);
+
     position: fixed;
     z-index: 10002;
+    transform: translateY(-100%);
 
-    animation: transitionAnimation 3.4s forwards;
+    animation: transitionAnimation 2.3s forwards;
 }
 
 @keyframes transitionAnimation{
     0%{
-        transform: translateY(0);
+        transform: translateY(-400vh);
         transform: rotate(-45deg);
-        
+        transform: translateY(-100%);
     }
     100%{
         transform: translateY(-400vh);
         transform: translateX(500vw);
     }
 }
+
+
+
+// .transitionAnimation{
+//     width: 900vw;
+//     height: 400vh;
+//     background-color: rgb(36, 32, 32);
+//     position: fixed;
+//     z-index: 10002;
+
+//     animation: transitionAnimation 3.4s forwards;
+// }
+
+// @keyframes transitionAnimation{
+//     0%{
+//         transform: translateY(0);
+//         transform: rotate(-45deg);
+        
+//     }
+//     100%{
+//         transform: translateY(-400vh);
+//         transform: translateX(500vw);
+//     }
+// }
+
+// @media screen and (max-width: 1200px) and (min-width: 413px){
+
+// }

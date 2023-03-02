@@ -6,16 +6,19 @@ import Balloon from './components/Balloon'
 import Game from './components/Game'
 
 function App() {
-  const switchDelay = 10
+  const switchDelay = 1000
   const [loading, setLoading] = useState(false)
   const [gameActive, setGameActive] = useState(false)
+  const [animationActive, setAnimationActive] = useState(false)
+  const [balloonPosition, setBalloonPosition] = useState(0)
 
   useEffect(()=> {
     setLoading(true)
+    setBalloonPosition(Math.floor(Math.random() * 60)+13)
   }, [])
   
   const handleBalloonPop = () => {
-    console.log('pop')
+    setAnimationActive(true)
 
     //delay before switching to the game
     setTimeout(() => {
@@ -27,21 +30,25 @@ function App() {
 
   return (
     <div className="App">
-      {/* {gameActive ? <Game /> : 
+      {animationActive ? <div className="transitionAnimation"></div> : ''}
+
+      {gameActive ? <Game />
+       : 
         <>
           <Loader onLoading={loading} />
     
           <div className="wave" style={{zIndex: -3, top: '15px'}}></div>
     
           <h1 className="congratulation-text">Happy birthday!</h1>
-          <Balloon onPop={handleBalloonPop} />
+          <Balloon onPop={handleBalloonPop} position={balloonPosition}/>
           <Fireworks />
     
           <div className="wave" style={{bottom: '20px', zIndex: 888}}></div>
         </>
-      } */}
+      }
 
-      <Game />
+      {/* <Game />
+      <div className="transitionAnimation"></div> */}
     </div>
   )
 }

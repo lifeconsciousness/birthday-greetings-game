@@ -1,23 +1,46 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../index.scss' 
 
 type Props = {
-    onPop: React.MouseEventHandler<HTMLDivElement>
+    onPop: React.MouseEventHandler<HTMLDivElement>,
+    position: number
 }
 
-function Balloon({onPop}: Props) {
+function Balloon({onPop, position}: Props) {
+  const [isPopped, setIsPopped] = useState(false)
+  const [isTimeOut, setIsTimeOut] = useState(false)
+
+  if(isPopped){
+    setTimeout(()=>{
+      setIsTimeOut(true)
+    }, 400)
+  }
+  const balloonOpacity = isPopped ? 0 : 1
+  const popOpacity = isTimeOut ? 0 : 1
+
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    setIsPopped(true)
+    onPop(event);
+  }
+
   return (
-    <div>
-        <div className="balloonContainer" 
-        onClick={onPop}
+    <>
+      <div className="balloonContainer" 
+        onClick={handleClick}
         style={
-          {left: `${Math.floor(Math.random() * 60)+13}vw`,
-            animationDelay: `${(Math.floor(Math.random() * 10) + 1)/10}s`,
-          }}>
-        <div className="balloon"><div className="balloonShade"></div></div>
-        <div className="rope"></div>
+        {left: `${position}vw`,
+          animationDelay: `${(Math.floor(Math.random() * 10) + 1)/10}s`,
+        }}>
+        <div className="balloon" style={{opacity: balloonOpacity}}><div className="balloonShade"></div></div>
+        <div className="rope" style={{opacity: balloonOpacity}}></div>
+
+        <img
+          src="./public/pop.png"
+          className="popEffect"
+          style={{ left: `${position}vw`, top: 0, opacity: popOpacity}}
+        />
       </div>
-    </div>
+    </>
   )
 }
 

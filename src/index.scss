@@ -6,7 +6,7 @@
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: rgb(27, 25, 25);
-  // background-color: rgb(227, 216, 216);
+  z-index: 2;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -17,10 +17,6 @@
 
 body {
   margin: 0;
-  // display: flex;
-  // place-items: center;
-  // min-width: 320px;
-  // min-height: 100vh;
   overflow: hidden !important;
 }
 
@@ -77,6 +73,12 @@ body {
   background-color: rgb(237, 237, 237);
   position: absolute;
   justify-self: flex-end;
+}
+
+.popEffect{
+  width: 130px;
+  height: 130px;
+  transform: translateY(-150px);
 }
 
 @keyframes balloonAnimation{

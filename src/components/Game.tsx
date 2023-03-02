@@ -21,6 +21,7 @@ export default function Game({}: Props) {
     //draw player stickman with hands trying to catch the present
     //find/draw texture for presents and stage
     //add animation to the character when it moves
+    //add some music and sfx
      
 
     const [playerPosition, setPlayerPosition] = useState(windowWidth/2)
@@ -105,7 +106,6 @@ export default function Game({}: Props) {
 
     return (
         <>
-            <div className="transitionAnimation"></div>
             <div className="game-screen">
                 <div className="stage"></div>
                 <div className="player" style={{left: `${playerPosition}px`}}></div>
