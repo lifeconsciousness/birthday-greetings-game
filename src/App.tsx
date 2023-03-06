@@ -39,7 +39,7 @@ function App() {
     
           <div className="wave" style={{zIndex: -3, top: '15px'}}></div>
     
-          <h1 className="congratulation-text">Happy birthday!</h1>
+          <h1 className="congratulation-text">Hppy birthday!</h1>
           <Balloon onPop={handleBalloonPop} position={balloonPosition}/>
           <Fireworks />
     
