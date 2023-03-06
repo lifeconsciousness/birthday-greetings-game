@@ -47,8 +47,7 @@ function App() {
         </>
       }
 
-      {/* <Game />
-      <div className="transitionAnimation"></div> */}
+      {/* <Game /> */}
     </div>
   )
 }

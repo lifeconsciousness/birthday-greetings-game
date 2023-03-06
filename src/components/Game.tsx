@@ -12,9 +12,6 @@ export default function Game({}: Props) {
     const minPosition = 0;
     const maxPosition = windowWidth - playerWidth;
 
-    //make transition animation
-    //set a rand position for player every time
-    //make pop animation for the balloon and some particles before popping
     //write message to pop the balloon and message about controlls in the game
     //make the initial 3,2,1 countdown
     //make squares randomly generate on the top and fall with different velocity
@@ -107,8 +104,9 @@ export default function Game({}: Props) {
     return (
         <>
             <div className="game-screen">
-                <div className="stage"></div>
+                <div className="presents-container"></div>
                 <div className="player" style={{left: `${playerPosition}px`}}></div>
+                <div className="stage"></div>
             </div>
         </>
     )

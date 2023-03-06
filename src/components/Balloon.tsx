@@ -13,7 +13,7 @@ function Balloon({onPop, position}: Props) {
   if(isPopped){
     setTimeout(()=>{
       setIsTimeOut(true)
-    }, 400)
+    }, 300)
   }
   const balloonOpacity = isPopped ? 0 : 1
   const popOpacity = isTimeOut ? 0 : 1
@@ -35,7 +35,7 @@ function Balloon({onPop, position}: Props) {
         <div className="rope" style={{opacity: balloonOpacity}}></div>
 
         <img
-          src="./public/pop.png"
+          src="/pop.png"
           className="popEffect"
           style={{ left: `${position}vw`, top: 0, opacity: popOpacity}}
         />
