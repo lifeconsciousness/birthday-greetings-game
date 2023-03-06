@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import '../index.scss' 
+import PopImg from '/pop.png'
 
 type Props = {
     onPop: React.MouseEventHandler<HTMLDivElement>,
@@ -35,7 +36,8 @@ function Balloon({onPop, position}: Props) {
         <div className="rope" style={{opacity: balloonOpacity}}></div>
 
         <img
-          src="/pop.png"
+          src={PopImg}
+          // src="/pop.png"
           className="popEffect"
           style={{ left: `${position}vw`, top: 0, opacity: popOpacity}}
         />
