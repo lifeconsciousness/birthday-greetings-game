@@ -10,6 +10,8 @@ type PropsPresent = {
     htmlId: string,
     left: number,
     size: number,
+    animationDelay: number,
+    animationLength: number,
 }
 
 //write message to pop the balloon and message about controlls in the game
@@ -116,37 +118,49 @@ export default function Game({ }: Props) {
     interface Present {
         id: string,
         left: number,
-        size: number
+        size: number,
+        animationDelay: number,
+        animationLength: number,
     }
     const [presents, setPresents] = useState<Present[]>([])
-    const spawnDelay = 4000
-    const presentAmount = 1
+    const [firstTime, setFirstTime] = useState(true)
+    const [score, setScore] = useState(0)
+    const spawnDelay = Math.floor(Math.random() * 2300) + 1500
+    // const presentAmount = Math.floor(Math.random() * 5) + 1
+    const presentAmount = 0
 
+    if (firstTime) { generatePresents(); setFirstTime(false) }
+
+    function generatePresents() {
+        const newPresents: any = []
+
+        for (let i = 0; i < presentAmount; i++) {
+            newPresents.push(
+                {
+                    id: Math.random().toString(32).substring(2, 9),
+                    left: Math.floor(Math.random() * 70) + 10,
+                    size: Math.floor(Math.random() * 50) + 100,
+                    // size: Math.floor(Math.random() * 2) + 12,
+                    animationDelay: Math.floor(Math.random() * 4) + 1,
+                    animationLength: Math.floor(Math.random() * 5) + 2,
+                })
+        }
+        //updating existing present array with newly generated ones
+        setPresents((prevPresents) => [...prevPresents, ...newPresents])
+    }
 
     useEffect(() => {
-        //generating the presents 
+        //constantly generating the presents
         const interval = setInterval(() => {
-            const newPresents: any = []
-
-            for (let i = 0; i < presentAmount; i++) {
-                newPresents.push(
-                    {
-                        id: Math.random().toString(32).substring(2, 9),
-                        left: Math.floor(Math.random() * 60) + 13,
-                        size: Math.floor(Math.random() * 50) + 100
-                    })
-            }
-            //updating existing present array with newly generated ones
-            setPresents((prevPresents) => [...prevPresents, ...newPresents])
+            generatePresents()
         }, spawnDelay)
 
         //clearing the interval to prevent memory leaks
         return () => clearInterval(interval)
     }, [])
 
-
     useEffect(() => {
-        //generating the presents 
+        //every 10 ms present array is filtered
         const interval = setInterval(() => {
             setPresents((prevPresents) => prevPresents.filter((present) => {
                 const presentElement = document.getElementById(`present-${present.id}`)
@@ -157,10 +171,12 @@ export default function Game({ }: Props) {
 
                 //if present reaches the bottom it is deleted
                 if (presentRect && presentRect.top > window.innerHeight - 100) {
+                    setScore((prevScore) => prevScore - 20)
                     return false
                 }
                 //if present touches player it is deleted
                 if (presentRect && playerRect && presentRect.bottom > playerRect.top && playerRect.left <= presentRect.right && playerRect.right >= presentRect.left) {
+                    setScore((prevScore) => prevScore + 1)
                     return false
                 }
 
@@ -168,43 +184,48 @@ export default function Game({ }: Props) {
             }))
         }, 10)
 
-        //clearing the interval to prevent memory leaks
         return () => clearInterval(interval)
     }, [])
 
+    //main game components put together
     return (
         <>
             <div className="game-screen">
                 <div className="presents-container">
                     {
                         presents.map(present => (
-                            <Present htmlId={present.id} key={present.id} left={present.left} size={present.size} />
+                            <Present htmlId={present.id} key={present.id} left={present.left} size={present.size} animationDelay={present.animationDelay} animationLength={present.animationLength} />
                         ))
                     }
                 </div>
                 <div className="player" ref={playerRef} style={{ left: `${playerPosition}px` }}></div>
                 <div className="stage"></div>
+                <h2 className='score'>Score: {score}</h2>
             </div>
         </>
     )
 }
 
 
-const Present = React.memo(({ htmlId, left, size }: PropsPresent) => {
+
+
+//react memo to persist player position through renders
+const Present = React.memo(({ htmlId, left, size, animationDelay, animationLength }: PropsPresent) => {
     return (
         <div
             id={`present-${htmlId}`}
             className="present"
             style={{
-                animation: `present-fall ${3}s`,
+                animation: `present-fall ${animationLength}s`,
                 width: `${size}px`,
-                left: `${left}vw`
+                left: `${left}vw`,
+                animationDelay: `${animationDelay}s`,
             }}>
         </div>
     )
 })
 
-//spawning and deleting presents
+
 //score
 //defeat and restart button
 //textures and css
