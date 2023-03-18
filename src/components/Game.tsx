@@ -1,17 +1,11 @@
 import React from 'react'
 import '../index.scss'
 import { useEffect, useState, useRef, memo } from 'react'
+import ReplayBtn from '/replay.png'
+import Present from './Present'
 
 type Props = {
 
-}
-
-type PropsPresent = {
-    htmlId: string,
-    left: number,
-    size: number,
-    animationDelay: number,
-    animationLength: number,
 }
 
 //write message to pop the balloon and message about controlls in the game
@@ -30,7 +24,7 @@ export default function Game({ }: Props) {
     const stepSize = 30
     const minPosition = 0;
     const maxPosition = windowWidth - playerWidth
-    const playerRef = useRef<HTMLDivElement>(null)
+    const playerRef = useRef<HTMLImageElement>(null)
 
     const [playerPosition, setPlayerPosition] = useState(windowWidth / 2)
 
@@ -112,8 +106,10 @@ export default function Game({ }: Props) {
         }
     }, [mouseIsDown])
     /////////////////////////////////////////////////////////////////////////
+    //Game logic////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
 
-    //////////////////////////////Game logic////////////////////////////////
+    //declarations
 
     interface Present {
         id: string,
@@ -122,14 +118,23 @@ export default function Game({ }: Props) {
         animationDelay: number,
         animationLength: number,
     }
+    //0 is game, -1 - defeat, 1 - wictory
+    const [win, setWin] = useState(-1)
+
     const [presents, setPresents] = useState<Present[]>([])
     const [firstTime, setFirstTime] = useState(true)
     const [score, setScore] = useState(0)
     const spawnDelay = Math.floor(Math.random() * 2300) + 1500
-    // const presentAmount = Math.floor(Math.random() * 5) + 1
-    const presentAmount = 0
+    // let presentAmount = Math.floor(Math.random() * 5) + 1
+    let presentAmount = 0
 
     if (firstTime) { generatePresents(); setFirstTime(false) }
+
+    //////////////////////////Reseting the game//////////////////////////////////
+    if (score < 0) {
+        presentAmount = 0
+    }
+    ////////////////////////Generating and deleting presents////////////////////
 
     function generatePresents() {
         const newPresents: any = []
@@ -149,8 +154,8 @@ export default function Game({ }: Props) {
         setPresents((prevPresents) => [...prevPresents, ...newPresents])
     }
 
+    //constantly generating the presents
     useEffect(() => {
-        //constantly generating the presents
         const interval = setInterval(() => {
             generatePresents()
         }, spawnDelay)
@@ -159,6 +164,7 @@ export default function Game({ }: Props) {
         return () => clearInterval(interval)
     }, [])
 
+    //check presents if they reached the certain position
     useEffect(() => {
         //every 10 ms present array is filtered
         const interval = setInterval(() => {
@@ -171,7 +177,7 @@ export default function Game({ }: Props) {
 
                 //if present reaches the bottom it is deleted
                 if (presentRect && presentRect.top > window.innerHeight - 100) {
-                    setScore((prevScore) => prevScore - 20)
+                    setScore((prevScore) => prevScore - 10)
                     return false
                 }
                 //if present touches player it is deleted
@@ -187,7 +193,7 @@ export default function Game({ }: Props) {
         return () => clearInterval(interval)
     }, [])
 
-    //main game components put together
+    //////////////////////Main game components put together//////////////////////////
     return (
         <>
             <div className="game-screen">
@@ -198,9 +204,14 @@ export default function Game({ }: Props) {
                         ))
                     }
                 </div>
-                <div className="player" ref={playerRef} style={{ left: `${playerPosition}px` }}></div>
+                <img className="player" ref={playerRef} style={{ left: `${playerPosition}px` }}></img>
                 <div className="stage"></div>
                 <h2 className='score'>Score: {score}</h2>
+                <h1 className="win-message">{
+                    win === -1 ? 'You lost' :
+                        win === 1 ? 'Wow, you either modified the code or you are a persistent one. In any case, my congratulations!' : ''
+                }</h1>
+                <img src={ReplayBtn} alt="replay button" className='replay-button' />
             </div>
         </>
     )
@@ -209,23 +220,32 @@ export default function Game({ }: Props) {
 
 
 
-//react memo to persist player position through renders
-const Present = React.memo(({ htmlId, left, size, animationDelay, animationLength }: PropsPresent) => {
-    return (
-        <div
-            id={`present-${htmlId}`}
-            className="present"
-            style={{
-                animation: `present-fall ${animationLength}s`,
-                width: `${size}px`,
-                left: `${left}vw`,
-                animationDelay: `${animationDelay}s`,
-            }}>
-        </div>
-    )
-})
+
+// type PropsPresent = {
+//     htmlId: string,
+//     left: number,
+//     size: number,
+//     animationDelay: number,
+//     animationLength: number,
+// }
+
+// //react memo to persist player position through renders
+// const Present = React.memo(({ htmlId, left, size, animationDelay, animationLength }: PropsPresent) => {
+//     return (
+//         <div
+//             id={`present-${htmlId}`}
+//             className="present"
+//             style={{
+//                 animation: `present-fall ${animationLength}s`,
+//                 width: `${size}px`,
+//                 left: `${left}vw`,
+//                 animationDelay: `${animationDelay}s`,
+//             }}>
+//         </div>
+//     )
+// })
 
 
-//score
-//defeat and restart button
+//defeat logic and restart button
+//animated running stickman
 //textures and css
