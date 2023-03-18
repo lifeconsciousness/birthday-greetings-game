@@ -30,7 +30,7 @@ function Balloon({onPop, position}: Props) {
         onClick={handleClick}
         style={
         {left: `${position}vw`,
-          animationDelay: `${(Math.floor(Math.random() * 10) + 1)/10}s`,
+         animationDelay: `${(Math.floor(Math.random() * 10) + 1)/10}s`,
         }}>
         <div className="balloon" style={{opacity: balloonOpacity}}><div className="balloonShade"></div></div>
         <div className="rope" style={{opacity: balloonOpacity}}></div>

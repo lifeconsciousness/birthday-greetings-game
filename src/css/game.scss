@@ -50,6 +50,34 @@
 }
 
 
+.present{
+    background-color: blue;
+    width: 100px;
+    aspect-ratio: 1/1;
+    height: auto;
+    position: absolute;
+}
+
+@keyframes present-fall{
+    0%{
+        transform: translateY(-300px);
+    }
+    100%{
+        transform: translateY(100vh);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 // .transitionAnimation{
 //     width: 900vw;
