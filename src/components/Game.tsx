@@ -113,15 +113,16 @@ export default function Game({ }: Props) {
     const [win, setWin] = useState(0)
 
     const [presents, setPresents] = useState<Present[]>([])
-    const [firstTime, setFirstTime] = useState(true)
     const [score, setScore] = useState(0)
     const [spawnDelay, setSpawnDelay] = useState(Math.floor(Math.random() * 2500) + 1000)
-    const presentAmount = Math.floor(Math.random() * 3) + 2
+    const [presentAmount, setPresentAmount] = useState(Math.floor(Math.random() * 3) + 2)
+    const [maxAmount, setMaxAmount] = useState(5)
 
 
     ////////////////////////Generating and deleting presents////////////////////
 
     function generatePresents() {
+        setPresentAmount(Math.floor(Math.random() * 5) + 1)
         const newPresents: any = []
 
         for (let i = 0; i < presentAmount; i++) {
@@ -140,6 +141,9 @@ export default function Game({ }: Props) {
 
     //constantly generating the presents and checking if the player lost the game
     useEffect(() => {
+        setSpawnDelay(Math.floor(Math.random() * 2300) + 700)
+
+        console.log(presentAmount, spawnDelay)
         const interval = setInterval(() => {
             if (win === 0) {
                 generatePresents()
@@ -163,7 +167,7 @@ export default function Game({ }: Props) {
 
                 //if present reaches the bottom it is deleted
                 if (presentRect && presentRect.top > window.innerHeight - 100) {
-                    setScore((prevScore) => prevScore - 8)
+                    setScore((prevScore) => prevScore - 7)
                     return false
                 }
                 //if present touches player it is deleted
@@ -184,13 +188,15 @@ export default function Game({ }: Props) {
         if (score < 0) {
             setWin(-1)
             setPresents([])
-            setPlayerPosition(windowWidth / 2)
+            setPlayerPosition(windowWidth / 2 - 15)
         }
         if (score >= 0) {
             setWin(0)
-        } else if (score > 512) {
+        }
+        else if (score > 512) {
             setWin(1)
         }
+        console.log(presentAmount)
     }, [score])
 
     //////////////////////Main game components put together//////////////////////////
@@ -225,9 +231,18 @@ export default function Game({ }: Props) {
 }
 
 
-//try to remove the delay before presents spawn
-//present rain
+
+//add highest score system
+//Use mouse, A/D keys or touch to control the player. Reach the score 512 to win.
+//Display the message: You won! But is that all?
+//Then when you reach 1024 - another message
+//2056- persistent
 //draw player stickman with hands trying to catch the present
 //find/draw texture for presents and stage
 //add animation to the character when it moves
-//add some music and sfx
+//try to remove the delay before presents spawn
+//present rain (spawn delay 0)
+//add some music add button to turn it on and off
+//add readme with the description
+
+

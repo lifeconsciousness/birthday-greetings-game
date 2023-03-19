@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './index.scss'
+import CongatulationText from './components/CongatulationText'
 import Fireworks from './components/Fireworks'
 import Loader from './components/Loader'
 import Balloon from './components/Balloon'
@@ -27,27 +28,26 @@ function App() {
   };
 
 
-
   return (
     <div className="App">
       {animationActive ? <div className="transitionAnimation"></div> : ''}
 
-      {/* {gameActive ? <Game />
+      {gameActive ? <Game />
         :
         <>
           <Loader onLoading={loading} />
 
           <div className="wave" style={{ zIndex: -3, top: '15px' }}></div>
 
-          <h1 className="congratulation-text">Happy birthday!</h1>
+          <CongatulationText />
           <Balloon onPop={handleBalloonPop} position={balloonPosition} />
           <Fireworks />
 
           <div className="wave" style={{ bottom: '20px', zIndex: 888 }}></div>
         </>
-      } */}
+      }
 
-      <Game />
+      {/* <Game /> */}
     </div>
   )
 }
