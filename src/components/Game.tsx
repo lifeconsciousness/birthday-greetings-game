@@ -232,7 +232,7 @@ export default function Game({ }: Props) {
 
 
 
-//add highest score system
+//add highest score system (green color of the score if it is the highes, after win or lose display the highest score stored in localstorage)
 //Use mouse, A/D keys or touch to control the player. Reach the score 512 to win.
 //Display the message: You won! But is that all?
 //Then when you reach 1024 - another message

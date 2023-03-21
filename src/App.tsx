@@ -32,7 +32,7 @@ function App() {
     <div className="App">
       {animationActive ? <div className="transitionAnimation"></div> : ''}
 
-      {gameActive ? <Game />
+      {/* {gameActive ? <Game />
         :
         <>
           <Loader onLoading={loading} />
@@ -45,9 +45,9 @@ function App() {
 
           <div className="wave" style={{ bottom: '20px', zIndex: 888 }}></div>
         </>
-      }
+      } */}
 
-      {/* <Game /> */}
+      <Game />
     </div>
   )
 }
