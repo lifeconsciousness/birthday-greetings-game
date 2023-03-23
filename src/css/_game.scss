@@ -13,20 +13,23 @@
 
 .stage {
     width: 100vw;
-    height: 100px;
+    height: 50px;
     background-color: rgb(27, 25, 25);
     position: absolute;
     bottom: 0;
 }
 
 .player {
-    height: 80px;
-    width: 30px;
-    background-color: red;
+    height: 140px;
+    width: 70px;
+    // height: 210px;
+    // width: 90px;
+    // background-color: rgba(255, 0, 0, 0.396);
     position: absolute;
-    bottom: 100px;
+    bottom: 50px;
     right: 50%;
     user-select: none;
+    -webkit-user-drag: none;
 }
 
 
@@ -58,14 +61,16 @@
 
 
 .present {
-    background-color: blue;
+    // background-color: blue;
     width: 100px;
     aspect-ratio: 1/1;
     height: auto;
     user-select: none;
     -webkit-user-drag: none;
     position: absolute;
+    border-radius: 50%;
     transform: translateY(-600px);
+    filter: brightness(94%);
 }
 
 @keyframes present-fall {
@@ -74,7 +79,7 @@
     }
 
     100% {
-        transform: translateY(100vh);
+        transform: translateY(110vh);
     }
 }
 
@@ -100,6 +105,8 @@
     margin-bottom: 300px;
     z-index: 999999;
     cursor: pointer;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 .restart-button:hover {

@@ -1,6 +1,7 @@
 import '../index.scss'
 import { useEffect, useState, useRef, memo } from 'react'
 import RestartBtn from '/restart.png'
+import PlayerImg from '/player.png'
 import Present from './Present'
 
 type Props = {
@@ -114,25 +115,32 @@ export default function Game({ }: Props) {
 
     const [presents, setPresents] = useState<Present[]>([])
     const [score, setScore] = useState(0)
-    const [spawnDelay, setSpawnDelay] = useState(Math.floor(Math.random() * 2500) + 1000)
+    const [spawnDelay, setSpawnDelay] = useState(Math.floor(Math.random() * 2300) + 700)
+    const [firstTime, setFirstTime] = useState(false)
     const [presentAmount, setPresentAmount] = useState(Math.floor(Math.random() * 3) + 2)
-    const [maxAmount, setMaxAmount] = useState(5)
-
 
     ////////////////////////Generating and deleting presents////////////////////
 
     function generatePresents() {
-        setPresentAmount(Math.floor(Math.random() * 5) + 1)
+        // setPresentAmount(Math.floor(Math.random() * 5) + 1)
+        // setSpawnDelay(Math.floor(Math.random() * 2300) + 700)
         const newPresents: any = []
 
         for (let i = 0; i < presentAmount; i++) {
+            if (i === 1) { setFirstTime(false) }
+
+            const randAmount = Math.floor(Math.random() * 5) + 3
+            const randDelay = Math.floor(Math.random() * 1500) + 700
+            setPresentAmount(randAmount)
+            setSpawnDelay(randDelay)
+
             newPresents.push(
                 {
                     id: Math.random().toString(32).substring(2, 9),
                     left: Math.floor(Math.random() * 70) + 10,
                     size: Math.floor(Math.random() * 50) + 100,
-                    animationDelay: Math.floor(Math.random() * 4) + 1,
-                    animationLength: Math.floor(Math.random() * 5) + 2,
+                    animationDelay: firstTime ? 0 : Math.floor(Math.random() * 4) + 1,
+                    animationLength: Math.floor(Math.random() * 4) + 1.8,
                 })
         }
         //updating existing present array with newly generated ones
@@ -141,9 +149,6 @@ export default function Game({ }: Props) {
 
     //constantly generating the presents and checking if the player lost the game
     useEffect(() => {
-        setSpawnDelay(Math.floor(Math.random() * 2300) + 700)
-
-        console.log(presentAmount, spawnDelay)
         const interval = setInterval(() => {
             if (win === 0) {
                 generatePresents()
@@ -167,7 +172,7 @@ export default function Game({ }: Props) {
 
                 //if present reaches the bottom it is deleted
                 if (presentRect && presentRect.top > window.innerHeight - 100) {
-                    setScore((prevScore) => prevScore - 7)
+                    setScore((prevScore) => prevScore - 9)
                     return false
                 }
                 //if present touches player it is deleted
@@ -196,8 +201,8 @@ export default function Game({ }: Props) {
         else if (score > 512) {
             setWin(1)
         }
-        console.log(presentAmount)
     }, [score])
+
 
     //////////////////////Main game components put together//////////////////////////
     return (
@@ -210,7 +215,7 @@ export default function Game({ }: Props) {
                         ))
                     }
                 </div>
-                <img className="player" ref={playerRef} style={{ left: `${playerPosition}px` }}></img>
+                <img className="player" ref={playerRef} style={{ left: `${playerPosition}px` }} src={PlayerImg}></img>
                 <div className="stage"></div>
                 <h2 className='score'>Score: {score}</h2>
                 <div className="info-and-restart">
@@ -221,7 +226,7 @@ export default function Game({ }: Props) {
                     <img src={RestartBtn}
                         alt="restart button"
                         className='restart-button'
-                        onClick={() => setScore(0)}
+                        onClick={() => { setScore(0); setFirstTime(true) }}
                         style={{ display: win === -1 ? 'block' : win === 1 ? 'block' : 'none' }}
                     />
                 </div>
