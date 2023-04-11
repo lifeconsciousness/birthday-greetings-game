@@ -3,6 +3,10 @@ import { useEffect, useState, useRef, memo } from 'react'
 import RestartBtn from '/restart.png'
 import PlayerImg from '/player.png'
 import Present from './Present'
+import MainSong from '/catching-cubes.mp3'
+import SoundOnIcon from '/sound-on.png'
+import SoundOffIcon from '/sound-off.png'
+import { Howl, Howler } from 'howler';
 
 type Props = {
 
@@ -117,7 +121,8 @@ export default function Game({ }: Props) {
     const [score, setScore] = useState(0)
     const [spawnDelay, setSpawnDelay] = useState(Math.floor(Math.random() * 2300) + 700)
     const [firstTime, setFirstTime] = useState(false)
-    const [presentAmount, setPresentAmount] = useState(Math.floor(Math.random() * 3) + 2)
+    // const [presentAmount, setPresentAmount] = useState(Math.floor(Math.random() * 3) + 3)
+    const presentAmount = 4
 
     ////////////////////////Generating and deleting presents////////////////////
 
@@ -129,10 +134,10 @@ export default function Game({ }: Props) {
         for (let i = 0; i < presentAmount; i++) {
             if (i === 1) { setFirstTime(false) }
 
-            const randAmount = Math.floor(Math.random() * 5) + 3
-            const randDelay = Math.floor(Math.random() * 1500) + 700
-            setPresentAmount(randAmount)
-            setSpawnDelay(randDelay)
+            // const randAmount = Math.floor(Math.random() * 5) + 3
+            // const randDelay = Math.floor(Math.random() * 1500) + 700
+            // setPresentAmount(randAmount)
+            // setSpawnDelay(randDelay)
 
             newPresents.push(
                 {
@@ -154,6 +159,7 @@ export default function Game({ }: Props) {
                 generatePresents()
             }
         }, spawnDelay)
+        ////////////////////////////////////////////////////////////////////////////////////////SET RANDOM SPAWN DELAY AND AMOUNT HERE
 
         //clearing the interval to prevent memory leaks
         return () => clearInterval(interval)
@@ -203,11 +209,52 @@ export default function Game({ }: Props) {
         }
     }, [score])
 
+    //////////////////////////////Ingame sounds////////////////////////////////////
+
+    const [muted, setMuted] = useState(true);
+
+
+
+    useEffect(() => {
+        const sound = new Howl({
+            src: [MainSong],
+            loop: true
+        });
+
+        if (win === 0) {
+            if (!muted) {
+                sound.play();
+            }
+        }
+        else if (win === -1) {
+            sound.stop();
+        }
+
+        if (sound) {
+            sound.volume(muted ? 0.0 : 1.0);
+        }
+
+        return () => {
+            if (sound) {
+                sound.unload();
+            }
+        };
+    }, [muted, win]);
+
+
+    const handleMuteClick = () => {
+        setMuted(!muted);
+    };
+
+
+
 
     //////////////////////Main game components put together//////////////////////////
     return (
         <>
             <div className="game-screen">
+                <img className={muted ? 'sound-off sound-btn' : 'sound-btn'} onClick={handleMuteClick} src={muted ? SoundOffIcon : SoundOnIcon}></img>
+
                 <div className="presents-container">
                     {
                         presents.map(present => (

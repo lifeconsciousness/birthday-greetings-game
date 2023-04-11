@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import '../index.scss' 
+import '../index.scss'
 import PopImg from '/pop.png'
 
 type Props = {
-    onPop: React.MouseEventHandler<HTMLDivElement>,
-    position: number
+  onPop: React.MouseEventHandler<HTMLDivElement>,
+  position: number
 }
 
-function Balloon({onPop, position}: Props) {
+function Balloon({ onPop, position }: Props) {
   const [isPopped, setIsPopped] = useState(false)
   const [isTimeOut, setIsTimeOut] = useState(false)
 
-  if(isPopped){
-    setTimeout(()=>{
+  if (isPopped) {
+    setTimeout(() => {
       setIsTimeOut(true)
     }, 300)
   }
@@ -26,20 +26,20 @@ function Balloon({onPop, position}: Props) {
 
   return (
     <>
-      <div className="balloonContainer" 
+      <div className="balloonContainer"
         onClick={handleClick}
         style={
-        {left: `${position}vw`,
-         animationDelay: `${(Math.floor(Math.random() * 10) + 1)/10}s`,
-        }}>
-        <div className="balloon" style={{opacity: balloonOpacity}}><div className="balloonShade"></div></div>
-        <div className="rope" style={{opacity: balloonOpacity}}></div>
+          {
+            left: `${position}vw`,
+            animationDelay: `${(Math.floor(Math.random() * 10) + 1) / 10}s`,
+          }}>
+        <div className="balloon" style={{ opacity: balloonOpacity }}><div className="balloonShade"></div></div>
+        <div className="rope" style={{ opacity: balloonOpacity }}></div>
 
         <img
           src={PopImg}
-          // src="/pop.png"
           className="popEffect"
-          style={{ left: `${position}vw`, top: 0, opacity: popOpacity}}
+          style={{ left: `${position}vw`, top: 0, opacity: popOpacity }}
         />
       </div>
     </>

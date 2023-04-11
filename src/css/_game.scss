@@ -29,7 +29,7 @@
     bottom: 50px;
     right: 50%;
     user-select: none;
-    -webkit-user-drag: none;
+    // -webkit-user-drag: none;
 }
 
 
@@ -109,12 +109,19 @@
     -webkit-user-drag: none;
 }
 
-.restart-button:hover {
+.restart-button:active {
     scale: 0.9;
 }
 
-.restart-button:active {
-    scale: 0.9;
+.sound-btn {
+    position: absolute;
+    top: 9px;
+    right: 30px;
+    width: 55px;
+}
+
+.sound-off {
+    scale: 0.75;
 }
 
 .win-message {

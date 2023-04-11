@@ -4,7 +4,7 @@ type Props = {}
 
 function CongatulationText({ }: Props) {
     const [text, setText] = useState('Happy birthday!')
-    const [switchingDelay, setSwitchingDelay] = useState(3500)
+    const [switchingDelay, setSwitchingDelay] = useState(4500)
 
     useEffect(() => {
         const interval = setInterval(() => {
