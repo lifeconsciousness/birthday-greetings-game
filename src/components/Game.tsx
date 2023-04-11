@@ -144,8 +144,8 @@ export default function Game({ }: Props) {
                     id: Math.random().toString(32).substring(2, 9),
                     left: Math.floor(Math.random() * 70) + 10,
                     size: Math.floor(Math.random() * 50) + 100,
-                    animationDelay: firstTime ? 0 : Math.floor(Math.random() * 4) + 1,
-                    animationLength: Math.floor(Math.random() * 4) + 1.8,
+                    animationDelay: firstTime ? 0 : Math.floor(Math.random() * 3.5) + 1,
+                    animationLength: Math.floor(Math.random() * 3.2) + 1.9,
                 })
         }
         //updating existing present array with newly generated ones
@@ -178,7 +178,7 @@ export default function Game({ }: Props) {
 
                 //if present reaches the bottom it is deleted
                 if (presentRect && presentRect.top > window.innerHeight - 100) {
-                    setScore((prevScore) => prevScore - 9)
+                    setScore((prevScore) => prevScore - 14)
                     return false
                 }
                 //if present touches player it is deleted
@@ -195,11 +195,15 @@ export default function Game({ }: Props) {
     }, [])
 
     ////////////////////////stopping and reseting the game/////////////////////
+
+    const [scoreIsHighest, setScoreIsHighest] = useState(false)
+
     useEffect(() => {
         if (score < 0) {
             setWin(-1)
             setPresents([])
             setPlayerPosition(windowWidth / 2 - 15)
+
         }
         if (score >= 0) {
             setWin(0)
@@ -207,13 +211,15 @@ export default function Game({ }: Props) {
         else if (score > 512) {
             setWin(1)
         }
+        if (score > JSON.parse(localStorage.getItem('highScore') || '0')) {
+            localStorage.setItem('highScore', JSON.stringify(score))
+            setScoreIsHighest(true)
+        }
     }, [score])
 
     //////////////////////////////Ingame sounds////////////////////////////////////
 
     const [muted, setMuted] = useState(true);
-
-
 
     useEffect(() => {
         const sound = new Howl({
@@ -228,6 +234,7 @@ export default function Game({ }: Props) {
         }
         else if (win === -1) {
             sound.stop();
+            setScoreIsHighest(false)
         }
 
         if (sound) {
@@ -253,8 +260,6 @@ export default function Game({ }: Props) {
     return (
         <>
             <div className="game-screen">
-                <img className={muted ? 'sound-off sound-btn' : 'sound-btn'} onClick={handleMuteClick} src={muted ? SoundOffIcon : SoundOnIcon}></img>
-
                 <div className="presents-container">
                     {
                         presents.map(present => (
@@ -262,12 +267,12 @@ export default function Game({ }: Props) {
                         ))
                     }
                 </div>
-                <img className="player" ref={playerRef} style={{ left: `${playerPosition}px` }} src={PlayerImg}></img>
+                <img className="player" ref={playerRef} style={{ left: `${playerPosition}px` }} draggable="false" src={PlayerImg}></img>
                 <div className="stage"></div>
-                <h2 className='score'>Score: {score}</h2>
+                <h2 className='score'>Score: <span style={{ color: scoreIsHighest ? 'green' : 'black' }}>{score}</span></h2>
                 <div className="info-and-restart">
                     <h1 className="win-message">{
-                        win === -1 ? 'You lost' :
+                        win === -1 ? `Highest score: ${JSON.parse(localStorage.getItem('highScore') || '0')}` :
                             win === 1 ? 'Wow, you either modified the code or you are a persistent one. In any case, my congratulations!' : ''}
                     </h1>
                     <img src={RestartBtn}
@@ -276,12 +281,16 @@ export default function Game({ }: Props) {
                         onClick={() => { setScore(0); setFirstTime(true) }}
                         style={{ display: win === -1 ? 'block' : win === 1 ? 'block' : 'none' }}
                     />
+                    <img className={muted ? 'sound-off sound-btn' : 'sound-btn'} onClick={handleMuteClick} src={muted ? SoundOffIcon : SoundOnIcon}></img>
                 </div>
             </div>
         </>
     )
 }
 
+
+//add message about the winning score
+//show the highest score
 
 
 //add highest score system (green color of the score if it is the highes, after win or lose display the highest score stored in localstorage)
