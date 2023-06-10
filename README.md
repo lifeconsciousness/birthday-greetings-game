@@ -2,7 +2,7 @@
 
 A birthday card with a little game in it :)
 
-<a href='https://lifeconsciousness.github.io/birthday-greetings-game/' target='_blank'>Live version🎉<a/>
+<a href='https://lifeconsciousness.github.io/birthday-greetings-game/' target='_blank'>Live version🏠<a/>
 
 ## Features:
   - randomized position of falling presents
